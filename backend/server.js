@@ -9,5 +9,5 @@ app.get("/api/notes", (req, res) => {
 });
 
 app.listen(5001, () => {
-  console.log("Connected");
+  console.log("Connected to port 5001");
 });
