@@ -1,11 +1,19 @@
 import express from 'express';
 import notesRoutes from "./routes/notesRoutes.js";
+import { connectDb } from "./config/db.js";
+import dotenv from "dotenv";
+
+// Use the variables in the env file
+dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 5001; 
+
+connectDb();
 
 // Routes
 app.use("/api/notes", notesRoutes);
 
-app.listen(5001, () => {
-  console.log("Connected to port 5001");
+app.listen(PORT, () => {
+  console.log("Connected to port ", PORT);
 });
