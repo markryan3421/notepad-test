@@ -7,12 +7,18 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5001; 
+const PORT = process.env.PORT || 5001;
 
 connectDb();
 
 // Middleware to parse JSON bodies, data won't be stored to db without this
-app.use(express.json()); 
+app.use(express.json());
+
+// Example custom middleware
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  next();
+});
 
 // Routes
 app.use("/api/notes", notesRoutes);
