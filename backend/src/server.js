@@ -3,6 +3,7 @@ import notesRoutes from "./routes/notesRoutes.js";
 import { connectDb } from "./config/db.js";
 import dotenv from "dotenv";
 import rateLimiter from './middleware/rateLimiter.js';
+import cors from 'cors';
 
 // Use the variables in the env file
 dotenv.config();
@@ -10,6 +11,10 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5001;
 
+// Enable CORS
+app.use(cors({
+  origin: "http://localhost:5175"
+}));
 
 // Middleware to parse JSON bodies, data won't be stored to db without this
 app.use(express.json());
@@ -28,6 +33,6 @@ app.use("/api/notes", notesRoutes);
 
 connectDb().then(() => {
   app.listen(PORT, () => {
-    console.log("Connected to port ", PORT);
+    console.log(`Connected to port ${PORT}`);
   });
 });
