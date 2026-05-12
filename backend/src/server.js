@@ -16,7 +16,8 @@ const PORT = process.env.PORT || 5001;
 
 // Enable CORS
 app.use(cors({
-  origin: "http://localhost:5175"
+  origin: "http://localhost:5175",
+  credentials: true,
 }));
 
 // Middleware to parse JSON bodies, data won't be stored to db without this
@@ -31,6 +32,7 @@ app.use((req, res, next) => {
   next();
 });
 
+// Cookie parser, reads cookies to make sure it the stored one matches the one to authenticates user
 app.use(cookieParser());
 
 // Routes
