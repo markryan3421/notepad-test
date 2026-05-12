@@ -89,7 +89,7 @@ const NoteDetailPage = () => {
           <Button variant="destructive" onClick={handleDelete}>
             <Trash2Icon className='mr-2 size-4' />
             {saving && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}
-            {saving ? "Deleting..." : "Delete Note"}
+            {saving ? "Deleting..." : "Delete Note"}s
           </Button>
         </div>
 

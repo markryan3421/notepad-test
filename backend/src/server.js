@@ -4,6 +4,9 @@ import { connectDb } from "./config/db.js";
 import dotenv from "dotenv";
 import rateLimiter from './middleware/rateLimiter.js';
 import cors from 'cors';
+import authMiddleware from './middleware/authMiddleware.js';
+import cookieParser from 'cookie-parser';
+import authRoutes from './routes/authRoutes.js';
 
 // Use the variables in the env file
 dotenv.config();
@@ -28,8 +31,11 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(cookieParser());
+
 // Routes
-app.use("/api/notes", notesRoutes);
+app.use("/api/notes", authMiddleware, notesRoutes);
+app.use("/api/auth", authRoutes);
 
 connectDb().then(() => {
   app.listen(PORT, () => {
