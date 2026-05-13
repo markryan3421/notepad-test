@@ -2,7 +2,7 @@ import Note from "../models/Note.js";
 
 export async function getAllNotes(req, res) {
   try {
-    const notes = await Note.find().sort({ createdAt: -1 });
+    const notes = await Note.find({ ...req.ownerFilter }).sort({ createdAt: -1 });
     res.status(200).json(notes);
   } catch (error) {
     console.error("Error fetching notes", error);
@@ -13,7 +13,7 @@ export async function getAllNotes(req, res) {
 export async function createNote(req, res) {
   try {
     const { title, content } = req.body;
-    const note = new Note({ title, content });
+    const note = new Note({ title, content, ...req.ownerFilter }); // userId from "..req.ownerFilter" is auto-attached
 
     const newNote = await note.save();
     res.status(201).json(newNote);
@@ -25,7 +25,7 @@ export async function createNote(req, res) {
 
 export async function getNoteById(req, res) {
   try {
-    const note = await Note.findById(req.params.id);
+    const note = await Note.findOne({ _id: req.params.id, ...req.ownerFilter });
     if (!note) return res.status(404).json({ message: "Note not found." });
     res.status(200).json(note);
   } catch (error) {
@@ -37,7 +37,11 @@ export async function getNoteById(req, res) {
 export async function updateNote(req, res) {
   try {
     const { title, content } = req.body;
-    const updateNote = await Note.findByIdAndUpdate(req.params.id, { title, content }, { new: true });
+    const updateNote = await Note.findOneAndUpdate(
+      { _id: req.params.id, ...req.ownerFilter },
+      { title, content },
+      { new: true }
+    );
 
     if (!updateNote) return res.status(404).json({ message: "Note not found" });
 
@@ -50,7 +54,7 @@ export async function updateNote(req, res) {
 
 export async function deleteNote(req, res) {
   try {
-    const deleteNote = await Note.findByIdAndDelete(req.params.id);
+    const deleteNote = await Note.findOneAndDelete({ _id: req.params.id, ...req.ownerFilter });
 
     if (!deleteNote) return res.status(404).json({ message: "Note not found" });
 

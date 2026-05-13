@@ -15,7 +15,7 @@ const Navbar = () => {
         {user ? (
           <>
             <span className="text-sm">{user.email}</span>
-            <Link to="/create" className={buttonVariants()}></Link>
+            <Link to="/create" className={buttonVariants()}>Create Note</Link>
             <Button onClick={logout} variant='ghost'>
               <LogOutIcon className="w-4 h-4 mr-1" /> Logout
             </Button>
