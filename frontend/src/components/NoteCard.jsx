@@ -19,7 +19,7 @@ const NoteCard = ({ note, setNotes }) => {
 
     try {
       await api.delete(`/notes/${id}`);
-      setNotes((prev) => prev.filter((note) => note._id !== id)); // Update the state to remove the deleted note without refetching or reloading the page
+      setNotes((prev) => prev.filter((note) => note._id !== id)); // Update the state to remove the deleted note without reloading the page
       toast.success("Note deleted successfully");
     } catch (error) {
       console.error("Error deleting note:", error);
@@ -38,6 +38,7 @@ const NoteCard = ({ note, setNotes }) => {
         <CardContent>
           <p>{note.content}</p>
           <span className='text-sm text-base-content/60'>{formatDate(new Date(note.createdAt))}</span>
+          <p className='text-xs text-base-content/60 mt-2'>Created by:{note.userId.email}</p>
         </CardContent>
         <CardFooter>
           <div className='flex gap-2'>
