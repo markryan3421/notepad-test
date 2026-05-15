@@ -8,6 +8,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import FileUpload from '@/components/FileUpload';
 
 const NoteDetailPage = () => {
   const [note, setNote] = useState(null);
@@ -33,6 +34,10 @@ const NoteDetailPage = () => {
 
     fetchNote();
   }, [id]);
+
+  const handleImageUpload = (url) => {
+    setNote((prev) => ({ ...prev, image: url }));
+  };
 
   console.log({ note });
 
@@ -98,6 +103,12 @@ const NoteDetailPage = () => {
             <CardTitle className="text-3xl text-center">Edit Note</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
+            {/* File Upload */}
+            <div>
+              <FileUpload noteId={note._id} onUpload={handleImageUpload} />
+              {note.image && <img src={note.image} alt="Note attachment" className="max-w-xs mt-2" />}
+            </div>
+
             {/* Title */}
             <div className="space-y-2">
               <Field>

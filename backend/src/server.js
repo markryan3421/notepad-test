@@ -1,7 +1,7 @@
+import dotenv from "dotenv";
 import express from 'express';
 import notesRoutes from "./routes/notesRoutes.js";
 import { connectDb } from "./config/db.js";
-import dotenv from "dotenv";
 import rateLimiter from './middleware/rateLimiter.js';
 import cors from 'cors';
 import authMiddleware from './middleware/authMiddleware.js';
@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 5001;
 
 // Enable CORS
 app.use(cors({
-  origin: "http://localhost:5175",
+  origin: "http://localhost:5173",
   credentials: true,
 }));
 

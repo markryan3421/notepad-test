@@ -29,7 +29,7 @@ const NoteCard = ({ note, setNotes }) => {
 
   return (
     <Link
-      to={`/note/${note._id}`}
+      to={`/notes/${note._id}`}
     >
       <Card>
         <CardHeader>
